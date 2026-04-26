@@ -227,9 +227,49 @@
         .controls-row {
             display: flex;
             justify-content: space-between;
+            align-items: stretch;
+            gap: 10px;
             width: 100%;
-            max-width: 320px; 
-            padding: 0 10px;
+            max-width: 320px;
+            padding: 0 4px;
+        }
+
+        .btn-ctrl {
+            flex: 1 1 0;
+            min-width: 0;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            color: #5c6366;
+            background: #f8f9fa;
+            border: 1px solid #e8eaed;
+            border-radius: 12px;
+            padding: 12px 12px;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s, box-shadow 0.15s;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+        }
+        .btn-ctrl:hover {
+            background: #f1f2f6;
+            color: var(--text-main);
+            border-color: #dce0e4;
+        }
+        .btn-ctrl:active {
+            transform: scale(0.98);
+            box-shadow: none;
+        }
+        .btn-ctrl-exit {
+            text-align: center;
+        }
+        .btn-ctrl-reveal {
+            background: #fff;
+            border: 1px solid #dfe6e9;
+            color: #636e72;
+        }
+        .btn-ctrl-reveal:hover {
+            border-color: var(--text-main);
         }
 
         input[type="number"] {
@@ -266,20 +306,6 @@
             cursor: pointer;
         }
         
-        .btn-secondary-link {
-            background: transparent;
-            color: #b2bec3;
-            border: none;
-            font-size: 0.9rem;
-            text-decoration: underline;
-            cursor: pointer;
-            padding: 5px;
-        }
-        .btn-secondary-link:hover { color: var(--text-main); }
-        
-        .btn-exit { text-align: left; }
-        .btn-giveup { text-align: right; }
-
         .stat-number { font-size: 3rem; font-weight: 800; margin: 10px 0; }
         
         #breakdown-container {
@@ -348,8 +374,8 @@
                 <button class="btn-submit" onclick="Game.checkAttempt()">Submit</button>
             </div>
             <div class="controls-row">
-                <button class="btn-secondary-link btn-exit" onclick="Game.exit()">← Exit</button>
-                <button class="btn-secondary-link btn-giveup" onclick="Game.endGame(false, true)">Show Answer</button>
+                <button type="button" class="btn-ctrl btn-ctrl-exit" onclick="Game.exit()" aria-label="Exit to home">Exit</button>
+                <button type="button" class="btn-ctrl btn-ctrl-reveal" onclick="Game.endGame(false, true)" aria-label="Show the correct answer">Show Answer</button>
             </div>
         </div>
     </div>
