@@ -23,7 +23,7 @@ No build step or dependencies. Open `index.html` in a browser, or serve the fold
 | **Daily Challenge** | The puzzle is **deterministic for a given calendar day** (seeded from the date). **Everyone gets the same daily** on that day. Before building the chain, a **difficulty tier** is rolled with the same seed: roughly **~18%** Beginner, **~77%** Medium, **~5%** Hard (tweak `DAILY_EASY_CUTOFF` / `DAILY_MEDIUM_CUTOFF` in `index.html` if you want a different mix). |
 | **Practice** | You pick **Easy (Beginner)**, **Medium**, or **Hard**. Each run uses normal randomness (not the date seed), so every round is different. |
 
-Difficulty changes **how large and how varied the numbers and operations** can be—not how long the run is: every run uses the same number of **10** operation steps after the start (see `MENTAL_ROUNDS` in the script). Operations are designed so answers stay in a sensible range; only steps that keep the running value as a **positive integer under 1000** are applied.
+Every run uses the same number of **10** operation steps after the start (`MENTAL_ROUNDS`). **Difficulty** changes **how large and how varied the numbers and operations** are: the **Easy** pool sticks to small add/subtract, double/halve, ×3/×4, and simple fixed divisors—**no** percentages, **no** fractions, and **no** random “×5” or random mult/div (those start at **Medium+**). Only steps that keep the running value as a **positive integer** under the per-difficulty cap are applied.
 
 ## Project structure
 

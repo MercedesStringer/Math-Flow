@@ -400,8 +400,8 @@ const MathEngine = {
 
     ops: {
         // --- BASIC ARITHMETIC ---
-        'add': { fn: (c, r, diff) => { let max = diff === 'hard' ? 50 : diff === 'medium' ? 20 : 8; let v = Math.floor(r()*max)+1; let txt = MathEngine.phrase([`+ ${v}`, `Plus ${v}`, `Add ${v}`], r); return { val: c+v, txt: txt, color: 't-add', opId: 'add', opVal: v }; } },
-        'sub': { fn: (c, r, diff) => { let max = diff === 'hard' ? 50 : diff === 'medium' ? 14 : 6; let v = Math.floor(r()*max)+1; let txt = MathEngine.phrase([`- ${v}`, `Minus ${v}`, `Subtract ${v}`, `Deduct ${v}`, `Take away ${v}`], r); return { val: c-v, txt: txt, color: 't-sub', opId: 'sub', opVal: v }; } },
+        'add': { fn: (c, r, diff) => { let max = diff === 'hard' ? 50 : diff === 'medium' ? 20 : 5; let v = Math.floor(r()*max)+1; let txt = MathEngine.phrase([`+ ${v}`, `Plus ${v}`, `Add ${v}`], r); return { val: c+v, txt: txt, color: 't-add', opId: 'add', opVal: v }; } },
+        'sub': { fn: (c, r, diff) => { let max = diff === 'hard' ? 50 : diff === 'medium' ? 14 : 3; let v = Math.floor(r()*max)+1; let txt = MathEngine.phrase([`- ${v}`, `Minus ${v}`, `Subtract ${v}`, `Deduct ${v}`, `Take away ${v}`], r); return { val: c-v, txt: txt, color: 't-sub', opId: 'sub', opVal: v }; } },
         'add_large': { fn: (c, r) => ({ val: c+99, txt: MathEngine.phrase(['+ 99', 'Add 99'], r), color: 't-add', opId: 'add', opVal: 99 }) },
         'sub_large': { fn: (c, r) => ({ val: c-99, txt: MathEngine.phrase(['- 99', 'Subtract 99'], r), color: 't-sub', opId: 'sub', opVal: 99 }) },
         'add5':  { fn: (c, r) => ({ val: c+5,  txt: MathEngine.phrase(['+ 5', 'Plus 5', 'Add 5'], r), color: 't-add', opId: 'add', opVal: 5 }) },
@@ -414,7 +414,7 @@ const MathEngine = {
         'sub50': { fn: (c, r) => ({ val: c-50, txt: MathEngine.phrase(['- 50', 'Minus 50', 'Subtract 50', 'Take 50 off'], r), color: 't-sub', opId: 'sub', opVal: 50 }) },
 
         // --- MULTIPLICATION ---
-        'mult': { fn: (c, r, diff) => { let max = diff === 'hard' ? 12 : diff === 'medium' ? 7 : 4; let v = Math.floor(r()*(max-1))+2; let txt = MathEngine.phrase([`× ${v}`, `Times ${v}`, `Multiply by ${v}`], r); return { val: c*v, txt: txt, color: 't-mult', opId: 'mult', opVal: v }; } },
+        'mult': { fn: (c, r, diff) => { let max = diff === 'hard' ? 12 : diff === 'medium' ? 7 : 3; let v = Math.floor(r()*(max-1))+2; let txt = MathEngine.phrase([`× ${v}`, `Times ${v}`, `Multiply by ${v}`], r); return { val: c*v, txt: txt, color: 't-mult', opId: 'mult', opVal: v }; } },
         'mult5':  { fn: (c) => ({ val: c*5, txt: 'x 5', color: 't-mult', opId: 'mult', opVal: 5 }) },
         'mult10': { fn: (c) => ({ val: c*10, txt: 'x 10', color: 't-mult', opId: 'mult', opVal: 10 }) },
         'mult100':{ fn: (c) => ({ val: c*100, txt: 'x 100', color: 't-mult', opId: 'mult', opVal: 100 }) },
@@ -534,20 +534,28 @@ const MathEngine = {
     MENTAL_ROUNDS: 10,
     // Running total strictly *below* this. Easy: two-digit; medium: at most 199 (light hundreds, “a few”); hard: can reach high hundreds, never 1000+.
     maxRunValue(diff) {
-        if (diff === 'easy') return 100;
+        if (diff === 'easy') return 90; // strict `< valCap` ⇒ running total ≤ 89, still below medium ceiling
         if (diff === 'medium') return 200;
         return 1000;
     },
 
+    /** × / steps (incl. double, halve, many % that use opId “div” / “mult”) — for spacing on easy. */
+    isScaleStep(s) {
+        if (!s || !s.opId) return false;
+        return s.opId === 'mult' || s.opId === 'div' || s.opId === 'pow' || s.opId === 'root' || s.opId === 'growth' || s.opId === 'decay' || s.opId === 'comp' || s.opId === 'mixed' || s.opId === 'round';
+    },
+
     getPool(diff) {
-        // Easy = short list of “tables + facts” only (no powers, no ×10 blowups, no sevenths, etc.).
+        // Easy = small add/sub, ×2, halve, ×3/4, simple ÷. No %, no fractions, no ×5 or random mult/div (those start at medium).
         const easy = [
             'add', 'sub', 'add1', 'sub1', 'add2', 'sub2', 'add5', 'sub5', 'add10', 'sub10',
-            'mult', 'div', 'mult3', 'mult4', 'mult5', 'div2', 'div3', 'div4', 'div5', 'div10',
-            'double', 'half', 'frac14', 'frac15', 'frac25', 'perc10', 'perc20', 'perc25', 'perc50'
+            'double', 'half', 'mult3', 'mult4', 'div2', 'div3', 'div4', 'div5', 'div10',
         ];
-        // Medium: cap 199 + smaller random divisors (see `div` op). No 7th fractions, big fixed ÷, ×3⅓, or huge mults.
+        // Medium: everything from easy, plus “harder” tables, %, fractions, random mult/div, roots, etc.
         const fromMedium = [
+            'mult', 'div', 'mult5',
+            'frac14', 'frac15', 'frac25',
+            'perc10', 'perc20', 'perc25', 'perc50',
             'add25', 'sub25', 'add50', 'sub50', 'mult6', 'mult7', 'mult8', 'mult9', 'mult11', 'mult12', 'mult15', 'mult16', 'mult20', 'mult25',
             'div6', 'div7', 'div8', 'div9', 'div10', 'div100',
             'inc20', 'dec20', 'less10', 'inc50', 'square', 'sqrt', 'frac18', 'frac34', 'frac45', 'frac25',
@@ -565,9 +573,9 @@ const MathEngine = {
     },
 
     startRange(diff) {
-        if (diff === 'easy') return { min: 6, max: 18 };
-        if (diff === 'medium') return { min: 8, max: 40 };
-        return { min: 10, max: 72 };
+        if (diff === 'easy') return { min: 1, max: 12 };
+        if (diff === 'medium') return { min: 1, max: 40 };
+        return { min: 1, max: 72 };
     },
 
     generate(rng, difficulty) {
@@ -585,8 +593,9 @@ const MathEngine = {
         for (let i = 0; i < steps; i++) {
             let valid = false;
             let attempts = 0;
+            const maxAttempts = difficulty === 'easy' ? 300 : 100;
 
-            while (!valid && attempts < 100) {
+            while (!valid && attempts < maxAttempts) {
                 attempts++;
                 const opKey = poolKeys[Math.floor(rng() * poolKeys.length)];
                 let opDef = this.ops[opKey];
@@ -601,9 +610,17 @@ const MathEngine = {
                         if (prev.opId === 'sub' && curr.opId === 'add' && prev.opVal === curr.opVal) continue;
                         if (prev.opId === 'mult' && curr.opId === 'div' && prev.opVal === curr.opVal) continue;
                         if (prev.opId === 'div' && curr.opId === 'mult' && prev.opVal === curr.opVal) continue;
+                        // Easy: no back-to-back “scale” steps (avoids double→halve, ×3→×4, half→20%, etc.).
+                        if (difficulty === 'easy' && this.isScaleStep(prev) && this.isScaleStep(curr)) continue;
                     }
 
                     if (result.cat && bannedConcepts.has(result.cat)) continue;
+
+                    // Easy: no multiply while total is 1 (avoids 1×2, …) and any multiply’s result is ≤10.
+                    if (difficulty === 'easy' && result.opId === 'mult') {
+                        if (current < 2) continue;
+                        if (result.val > 10) continue;
+                    }
 
                     current = result.val;
                     let lenClass = 'medium';
