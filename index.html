@@ -406,8 +406,8 @@ const MathEngine = {
         'sub_large': { fn: (c, r) => ({ val: c-99, txt: MathEngine.phrase(['- 99', 'Subtract 99'], r), color: 't-sub', opId: 'sub', opVal: 99 }) },
         'add5':  { fn: (c, r) => ({ val: c+5,  txt: MathEngine.phrase(['+ 5', 'Plus 5', 'Add 5'], r), color: 't-add', opId: 'add', opVal: 5 }) },
         'sub5':  { fn: (c, r) => ({ val: c-5,  txt: MathEngine.phrase(['- 5', 'Minus 5', 'Subtract 5', 'Take away 5'], r), color: 't-sub', opId: 'sub', opVal: 5 }) },
-        'add10': { fn: (c, r) => ({ val: c+10, txt: MathEngine.phrase(['+ 10', 'Plus 10', 'Add 10', 'Add ten', 'Up 10'], r), color: 't-add', opId: 'add', opVal: 10 }) },
-        'sub10': { fn: (c, r) => ({ val: c-10, txt: MathEngine.phrase(['- 10', 'Minus 10', 'Subtract 10', 'Down 10', 'Take away 10'], r), color: 't-sub', opId: 'sub', opVal: 10 }) },
+        'add10': { fn: (c, r) => ({ val: c+10, txt: MathEngine.phrase(['+ 10', 'Plus 10', 'Add 10', 'Add ten'], r), color: 't-add', opId: 'add', opVal: 10 }) },
+        'sub10': { fn: (c, r) => ({ val: c-10, txt: MathEngine.phrase(['- 10', 'Minus 10', 'Subtract 10', 'Take away 10'], r), color: 't-sub', opId: 'sub', opVal: 10 }) },
         'add25': { fn: (c, r) => ({ val: c+25, txt: MathEngine.phrase(['+ 25', 'Plus 25', 'Add 25'], r), color: 't-add', opId: 'add', opVal: 25 }) },
         'sub25': { fn: (c, r) => ({ val: c-25, txt: MathEngine.phrase(['- 25', 'Minus 25', 'Subtract 25', 'Take 25 off'], r), color: 't-sub', opId: 'sub', opVal: 25 }) },
         'add50': { fn: (c, r) => ({ val: c+50, txt: MathEngine.phrase(['+ 50', 'Plus 50', 'Add 50'], r), color: 't-add', opId: 'add', opVal: 50 }) },
@@ -424,7 +424,7 @@ const MathEngine = {
         'mult7':  { fn: (c, r) => ({ val: c*7,  txt: MathEngine.phrase([`x 7`, '× 7', 'Times 7', 'Multiply by 7'], r), color: 't-mult', opId: 'mult', opVal: 7 }) },
         'mult8':  { fn: (c, r) => ({ val: c*8,  txt: MathEngine.phrase([`x 8`, '× 8', 'Times 8', 'Multiply by 8'], r), color: 't-mult', opId: 'mult', opVal: 8 }) },
         'mult9':  { fn: (c, r) => ({ val: c*9,  txt: MathEngine.phrase([`x 9`, '× 9', 'Times 9', 'Multiply by 9'], r), color: 't-mult', opId: 'mult', opVal: 9 }) },
-        'mult12': { fn: (c, r) => ({ val: c*12, txt: MathEngine.phrase([`x 12`, '× 12', 'Times 12', 'A dozen each'], r), color: 't-mult', opId: 'mult', opVal: 12 }) },
+        'mult12': { fn: (c, r) => ({ val: c*12, txt: MathEngine.phrase([`x 12`, '× 12', 'Times 12', 'Multiply by 12'], r), color: 't-mult', opId: 'mult', opVal: 12 }) },
         'mult20': { fn: (c, r) => ({ val: c*20, txt: MathEngine.phrase([`x 20`, '× 20', 'Times 20'], r), color: 't-mult', opId: 'mult', opVal: 20 }) },
         'mult25': { fn: (c, r) => ({ val: c*25, txt: MathEngine.phrase([`x 25`, '× 25', 'Times 25'], r), color: 't-mult', opId: 'mult', opVal: 25 }) },
 
@@ -447,12 +447,12 @@ const MathEngine = {
         // --- WORDED / DOUBLING / TRIPLING ---
         'double': { fn: (c, r) => ({ val: c*2, txt: MathEngine.phrase(['Double it', 'x 2'], r), cat: 'doubling', color: 't-word', opId: 'mult', opVal: 2 }) },
         'quad':   { fn: (c) => ({ val: c*4, txt: 'Quadruple it', cat: 'doubling', color: 't-word', opId: 'mult', opVal: 4 }) },
-        'half':   { fn: (c, r) => c%2===0 ? ({ val: c/2, txt: MathEngine.phrase(['Half it', 'Half of this', '1/2 of this'], r), cat: 'halving', color: 't-word', opId: 'div', opVal: 2 }) : null },
+        'half':   { fn: (c) => c%2===0 ? ({ val: c/2, txt: 'Halve it', cat: 'halving', color: 't-word', opId: 'div', opVal: 2 }) : null },
         'triple': { fn: (c) => ({ val: c*3, txt: 'Triple it', cat: 'tripling', color: 't-word', opId: 'mult', opVal: 3 }) },
-        'third':  { fn: (c) => c%3===0 ? ({ val: c/3, txt: 'Third of this', cat: 'thirding', color: 't-word', opId: 'div', opVal: 3 }) : null },
+        'third':  { fn: (c) => c%3===0 ? ({ val: c/3, txt: 'A third of this', cat: 'thirding', color: 't-word', opId: 'div', opVal: 3 }) : null },
 
         // --- POWERS ---
-        'square': { fn: (c, r, diff) => (diff === 'easy' && c > 6) || (diff === 'medium' && c > 10) || (diff === 'hard' && c > 12) ? null : { val: c*c, txt: MathEngine.phrase(['Square it', 'Times by itself', `x ${c}`], r), cat: 'squaring', color: 't-pow', opId: 'pow', opVal: 2 } },
+        'square': { fn: (c, r, diff) => (diff === 'easy' && c > 6) || (diff === 'medium' && c > 10) || (diff === 'hard' && c > 12) ? null : { val: c*c, txt: 'Multiply by itself', cat: 'squaring', color: 't-pow', opId: 'pow', opVal: 2 } },
         'cube':   { fn: (c) => c > 10 ? null : { val: c*c*c, txt: 'Cube it', cat: 'cubing', color: 't-pow', opId: 'pow', opVal: 3 } },
         'sqrt':   { fn: (c) => Number.isInteger(Math.sqrt(c)) ? { val: Math.sqrt(c), txt: 'Square Root', cat: 'rooting', color: 't-pow', opId: 'root', opVal: 2 } : null },
         'cbrt':   { fn: (c) => Number.isInteger(Math.cbrt(c)) ? { val: Math.cbrt(c), txt: 'Cube Root', cat: 'rooting', color: 't-pow', opId: 'root', opVal: 3 } : null },
@@ -472,7 +472,7 @@ const MathEngine = {
         'inc20':  { fn: (c) => c%5===0 ? ({ val: c*1.2, txt: 'Increase by 20%', cat: 'perc_growth', color: 't-frac', opId: 'growth', opVal: 1.2 }) : null },
         'dec20':  { fn: (c) => c%5===0 ? ({ val: c*0.8, txt: 'Decrease by 20%', cat: 'perc_decay', color: 't-frac', opId: 'decay', opVal: 0.8 }) : null },
         'inc50':  { fn: (c) => c%2===0 ? ({ val: c*1.5, txt: 'Increase by 50%', cat: 'perc_growth', color: 't-frac', opId: 'growth', opVal: 1.5 }) : null },
-        'less10': { fn: (c) => c%10===0 ? ({ val: c*0.9, txt: 'Less 10%', cat: 'perc_decay', color: 't-frac', opId: 'decay', opVal: 0.9 }) : null },
+        'less10': { fn: (c) => c%10===0 ? ({ val: c*0.9, txt: 'Decrease by 10%', cat: 'perc_decay', color: 't-frac', opId: 'decay', opVal: 0.9 }) : null },
 
         // --- FRACTIONS ---
         'frac14': { fn: (c) => c%4===0 ? ({ val: c/4, txt: '1/4 of this', cat: 'quartering', color: 't-frac', opId: 'div', opVal: 4 }) : null },
@@ -486,18 +486,18 @@ const MathEngine = {
         'frac45': { fn: (c) => c%5===0 ? ({ val: (c/5)*4, txt: '4/5 of this', cat: 'fifths', color: 't-frac', opId: 'comp', opVal: 0.8 }) : null },
         'frac27': { fn: (c) => c%7===0 ? ({ val: (c/7)*2, txt: '2/7 of this', cat: 'complex_frac', color: 't-frac', opId: 'comp', opVal: 2/7 }) : null },
         'frac47': { fn: (c) => c%7===0 ? ({ val: (c/7)*4, txt: '4/7 of this', cat: 'complex_frac', color: 't-frac', opId: 'comp', opVal: 4/7 }) : null },
-        'mult3_13': { fn: (c) => c%3===0 ? ({ val: (c/3)*10, txt: 'x 3 1/3', cat: 'mixed', color: 't-mult', opId: 'mixed', opVal: 10/3 }) : null },
+        'mult3_13': { fn: (c, r) => c%3===0 ? ({ val: (c/3)*10, txt: MathEngine.phrase(['× 3⅓', 'Multiply by 3⅓', 'x 3 1/3'], r), cat: 'mixed', color: 't-mult', opId: 'mixed', opVal: 10/3 }) : null },
 
         // --- MORE FIXED +/- (fast mental) ---
-        'add1':   { fn: (c, r) => ({ val: c+1,  txt: MathEngine.phrase(['+ 1', 'Plus 1', 'Add 1', 'Add one', 'Up 1'], r), color: 't-add', opId: 'add', opVal: 1 }) },
-        'sub1':   { fn: (c, r) => ({ val: c-1,  txt: MathEngine.phrase(['- 1', 'Minus 1', 'Subtract 1', 'Down 1'], r), color: 't-sub', opId: 'sub', opVal: 1 }) },
+        'add1':   { fn: (c, r) => ({ val: c+1,  txt: MathEngine.phrase(['+ 1', 'Plus 1', 'Add 1', 'Add one'], r), color: 't-add', opId: 'add', opVal: 1 }) },
+        'sub1':   { fn: (c, r) => ({ val: c-1,  txt: MathEngine.phrase(['- 1', 'Minus 1', 'Subtract 1', 'Take away 1'], r), color: 't-sub', opId: 'sub', opVal: 1 }) },
         'add2':   { fn: (c, r) => ({ val: c+2,  txt: MathEngine.phrase(['+ 2', 'Plus 2', 'Add 2'], r), color: 't-add', opId: 'add', opVal: 2 }) },
         'sub2':   { fn: (c, r) => ({ val: c-2,  txt: MathEngine.phrase(['- 2', 'Minus 2', 'Take away 2'], r), color: 't-sub', opId: 'sub', opVal: 2 }) },
         'add15':  { fn: (c, r) => ({ val: c+15, txt: MathEngine.phrase(['+ 15', 'Plus 15', 'Add 15'], r), color: 't-add', opId: 'add', opVal: 15 }) },
-        'sub15':  { fn: (c, r) => ({ val: c-15, txt: MathEngine.phrase(['- 15', 'Minus 15', 'Subtract 15', 'Fifteen less'], r), color: 't-sub', opId: 'sub', opVal: 15 }) },
-        'add20':  { fn: (c, r) => ({ val: c+20, txt: MathEngine.phrase(['+ 20', 'Plus 20', 'Add 20', 'A score more'], r), color: 't-add', opId: 'add', opVal: 20 }) },
-        'sub20':  { fn: (c, r) => ({ val: c-20, txt: MathEngine.phrase(['- 20', 'Minus 20', 'Subtract 20', 'A score off'], r), color: 't-sub', opId: 'sub', opVal: 20 }) },
-        'add100': { fn: (c, r) => ({ val: c+100, txt: MathEngine.phrase(['+ 100', 'Plus 100', 'A hundred on top'], r), color: 't-add', opId: 'add', opVal: 100 }) },
+        'sub15':  { fn: (c, r) => ({ val: c-15, txt: MathEngine.phrase(['- 15', 'Minus 15', 'Subtract 15', 'Take 15 off'], r), color: 't-sub', opId: 'sub', opVal: 15 }) },
+        'add20':  { fn: (c, r) => ({ val: c+20, txt: MathEngine.phrase(['+ 20', 'Plus 20', 'Add 20', 'Add twenty'], r), color: 't-add', opId: 'add', opVal: 20 }) },
+        'sub20':  { fn: (c, r) => ({ val: c-20, txt: MathEngine.phrase(['- 20', 'Minus 20', 'Subtract 20', 'Take 20 off'], r), color: 't-sub', opId: 'sub', opVal: 20 }) },
+        'add100': { fn: (c, r) => ({ val: c+100, txt: MathEngine.phrase(['+ 100', 'Plus 100', 'Add 100', 'Add a hundred'], r), color: 't-add', opId: 'add', opVal: 100 }) },
         'sub100': { fn: (c, r) => c > 100 ? ({ val: c-100, txt: MathEngine.phrase(['- 100', 'Minus 100', 'Take a hundred off'], r), color: 't-sub', opId: 'sub', opVal: 100 }) : null },
 
         // --- MORE × / (integer answers) ---
