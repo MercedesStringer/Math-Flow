@@ -328,9 +328,9 @@
 
     <div id="screen-practice" class="screen hidden">
         <h2>Select Difficulty</h2>
-        <button class="btn btn-outline" style="border-color: var(--c-add)" onclick="Game.init('practice', 'easy')">Easy (Beginner)</button>
-        <button class="btn btn-outline" style="border-color: var(--c-mult)" onclick="Game.init('practice', 'medium')">Medium (Intermediate)</button>
-        <button class="btn btn-outline" style="border-color: var(--c-sub)" onclick="Game.init('practice', 'hard')">Hard (Advanced)</button>
+        <button class="btn btn-outline" style="border-color: var(--c-add)" onclick="Game.init('practice', 'easy')">Easy</button>
+        <button class="btn btn-outline" style="border-color: var(--c-mult)" onclick="Game.init('practice', 'medium')">Medium</button>
+        <button class="btn btn-outline" style="border-color: var(--c-sub)" onclick="Game.init('practice', 'hard')">Hard</button>
         <button class="btn" style="background:transparent; color:#999; margin-top:20px; box-shadow:none;" onclick="Nav.to('screen-home')">Back</button>
     </div>
 
@@ -362,6 +362,7 @@
         <div id="breakdown-container"></div>
 
         <button id="btn-share" class="btn" onclick="Game.share()">Share Result</button>
+        <button id="btn-play-again" class="btn btn-outline hidden" type="button" onclick="Game.playAgain()">Play again</button>
         <button class="btn btn-outline" onclick="Nav.to('screen-home')">Home</button>
     </div>
 
@@ -625,6 +626,10 @@ const Game = {
     gameActive: false,
     
     init(mode, diff = 'medium') {
+        this.clearTimer();
+        this.startTime = 0;
+        this.gameActive = false;
+
         let rng;
         if (mode === 'daily') {
             const seedStr = new Date().toISOString().slice(0, 10);
@@ -639,7 +644,6 @@ const Game = {
         const result = MathEngine.generate(rng, diff);
         this.data = result;
         this.attempts = 0;
-        this.gameActive = false; 
         
         this.renderCarousel(result.sequence);
         Nav.to('screen-game');
@@ -681,7 +685,10 @@ const Game = {
 
     exit() {
         this.clearTimer();
+        this.startTime = 0;
         this.gameActive = false;
+        const c = document.getElementById('carousel');
+        if (c) c.scrollLeft = 0;
         Nav.to('screen-home');
     },
 
@@ -847,7 +854,25 @@ const Game = {
 
         this.renderBreakdown();
         this.lastResult = { isSuccess, time: elapsed.toFixed(1), playMode: this.playMode, tier: this.runDifficulty };
+
+        const playAgain = document.getElementById('btn-play-again');
+        if (playAgain) {
+            if (this.playMode === 'practice') {
+                playAgain.classList.remove('hidden');
+            } else {
+                playAgain.classList.add('hidden');
+            }
+        }
+
         Nav.to('screen-result');
+    },
+
+    playAgain() {
+        if (this.playMode === 'practice' && this.runDifficulty) {
+            this.init('practice', this.runDifficulty);
+        } else {
+            Nav.to('screen-practice');
+        }
     },
 
     renderBreakdown() {
