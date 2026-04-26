@@ -373,21 +373,49 @@ const MathEngine = {
 
     ops: {
         // --- BASIC ARITHMETIC ---
-        'add': { fn: (c, r, diff) => { let max = diff === 'hard' ? 50 : 20; let v = Math.floor(r()*max)+1; let txt = MathEngine.phrase([`+ ${v}`, `Plus ${v}`, `Add ${v}`], r); return { val: c+v, txt: txt, color: 't-add', opId: 'add', opVal: v }; } },
-        'sub': { fn: (c, r, diff) => { let max = diff === 'hard' ? 50 : 15; let v = Math.floor(r()*max)+1; let txt = MathEngine.phrase([`- ${v}`, `Minus ${v}`, `Subtract ${v}`, `Deduct ${v}`, `Take away ${v}`], r); return { val: c-v, txt: txt, color: 't-sub', opId: 'sub', opVal: v }; } },
+        'add': { fn: (c, r, diff) => { let max = diff === 'hard' ? 50 : diff === 'medium' ? 24 : 12; let v = Math.floor(r()*max)+1; let txt = MathEngine.phrase([`+ ${v}`, `Plus ${v}`, `Add ${v}`], r); return { val: c+v, txt: txt, color: 't-add', opId: 'add', opVal: v }; } },
+        'sub': { fn: (c, r, diff) => { let max = diff === 'hard' ? 50 : diff === 'medium' ? 16 : 9; let v = Math.floor(r()*max)+1; let txt = MathEngine.phrase([`- ${v}`, `Minus ${v}`, `Subtract ${v}`, `Deduct ${v}`, `Take away ${v}`], r); return { val: c-v, txt: txt, color: 't-sub', opId: 'sub', opVal: v }; } },
         'add_large': { fn: (c, r) => ({ val: c+99, txt: MathEngine.phrase(['+ 99', 'Add 99'], r), color: 't-add', opId: 'add', opVal: 99 }) },
         'sub_large': { fn: (c, r) => ({ val: c-99, txt: MathEngine.phrase(['- 99', 'Subtract 99'], r), color: 't-sub', opId: 'sub', opVal: 99 }) },
+        'add5':  { fn: (c, r) => ({ val: c+5,  txt: MathEngine.phrase(['+ 5', 'Plus 5', 'Add 5'], r), color: 't-add', opId: 'add', opVal: 5 }) },
+        'sub5':  { fn: (c, r) => ({ val: c-5,  txt: MathEngine.phrase(['- 5', 'Minus 5', 'Subtract 5', 'Take away 5'], r), color: 't-sub', opId: 'sub', opVal: 5 }) },
+        'add10': { fn: (c, r) => ({ val: c+10, txt: MathEngine.phrase(['+ 10', 'Plus 10', 'Add 10', 'Add ten', 'Up 10'], r), color: 't-add', opId: 'add', opVal: 10 }) },
+        'sub10': { fn: (c, r) => ({ val: c-10, txt: MathEngine.phrase(['- 10', 'Minus 10', 'Subtract 10', 'Down 10', 'Take away 10'], r), color: 't-sub', opId: 'sub', opVal: 10 }) },
+        'add25': { fn: (c, r) => ({ val: c+25, txt: MathEngine.phrase(['+ 25', 'Plus 25', 'Add 25'], r), color: 't-add', opId: 'add', opVal: 25 }) },
+        'sub25': { fn: (c, r) => ({ val: c-25, txt: MathEngine.phrase(['- 25', 'Minus 25', 'Subtract 25', 'Take 25 off'], r), color: 't-sub', opId: 'sub', opVal: 25 }) },
+        'add50': { fn: (c, r) => ({ val: c+50, txt: MathEngine.phrase(['+ 50', 'Plus 50', 'Add 50'], r), color: 't-add', opId: 'add', opVal: 50 }) },
+        'sub50': { fn: (c, r) => ({ val: c-50, txt: MathEngine.phrase(['- 50', 'Minus 50', 'Subtract 50', 'Take 50 off'], r), color: 't-sub', opId: 'sub', opVal: 50 }) },
 
         // --- MULTIPLICATION ---
-        'mult': { fn: (c, r, diff) => { let max = diff === 'hard' ? 12 : 5; let v = Math.floor(r()*(max-1))+2; let txt = MathEngine.phrase([`× ${v}`, `Times ${v}`, `Multiply by ${v}`], r); return { val: c*v, txt: txt, color: 't-mult', opId: 'mult', opVal: v }; } },
+        'mult': { fn: (c, r, diff) => { let max = diff === 'hard' ? 12 : diff === 'medium' ? 8 : 5; let v = Math.floor(r()*(max-1))+2; let txt = MathEngine.phrase([`× ${v}`, `Times ${v}`, `Multiply by ${v}`], r); return { val: c*v, txt: txt, color: 't-mult', opId: 'mult', opVal: v }; } },
         'mult5':  { fn: (c) => ({ val: c*5, txt: 'x 5', color: 't-mult', opId: 'mult', opVal: 5 }) },
         'mult10': { fn: (c) => ({ val: c*10, txt: 'x 10', color: 't-mult', opId: 'mult', opVal: 10 }) },
         'mult100':{ fn: (c) => ({ val: c*100, txt: 'x 100', color: 't-mult', opId: 'mult', opVal: 100 }) },
+        'mult3':  { fn: (c, r) => ({ val: c*3,  txt: MathEngine.phrase([`x 3`, '× 3', 'Times 3', 'Multiply by 3'], r), color: 't-mult', opId: 'mult', opVal: 3 }) },
+        'mult4':  { fn: (c, r) => ({ val: c*4,  txt: MathEngine.phrase([`x 4`, '× 4', 'Times 4', 'Multiply by 4'], r), color: 't-mult', opId: 'mult', opVal: 4 }) },
+        'mult6':  { fn: (c, r) => ({ val: c*6,  txt: MathEngine.phrase([`x 6`, '× 6', 'Times 6', 'Multiply by 6'], r), color: 't-mult', opId: 'mult', opVal: 6 }) },
+        'mult7':  { fn: (c, r) => ({ val: c*7,  txt: MathEngine.phrase([`x 7`, '× 7', 'Times 7', 'Multiply by 7'], r), color: 't-mult', opId: 'mult', opVal: 7 }) },
+        'mult8':  { fn: (c, r) => ({ val: c*8,  txt: MathEngine.phrase([`x 8`, '× 8', 'Times 8', 'Multiply by 8'], r), color: 't-mult', opId: 'mult', opVal: 8 }) },
+        'mult9':  { fn: (c, r) => ({ val: c*9,  txt: MathEngine.phrase([`x 9`, '× 9', 'Times 9', 'Multiply by 9'], r), color: 't-mult', opId: 'mult', opVal: 9 }) },
+        'mult12': { fn: (c, r) => ({ val: c*12, txt: MathEngine.phrase([`x 12`, '× 12', 'Times 12', 'A dozen each'], r), color: 't-mult', opId: 'mult', opVal: 12 }) },
+        'mult20': { fn: (c, r) => ({ val: c*20, txt: MathEngine.phrase([`x 20`, '× 20', 'Times 20'], r), color: 't-mult', opId: 'mult', opVal: 20 }) },
+        'mult25': { fn: (c, r) => ({ val: c*25, txt: MathEngine.phrase([`x 25`, '× 25', 'Times 25'], r), color: 't-mult', opId: 'mult', opVal: 25 }) },
 
         // --- DIVISION ---
-        'div': { fn: (c, r, diff, ban) => { let divs = []; let limit = diff === 'hard' ? 20 : 10; for(let i=2; i<=limit; i++) if(c%i===0) divs.push(i); if(ban.has('halving')) divs = divs.filter(d => d !== 2); if(ban.has('thirding')) divs = divs.filter(d => d !== 3); if(ban.has('quartering')) divs = divs.filter(d => d !== 4); if(divs.length === 0) return null; let v = divs[Math.floor(r()*divs.length)]; let txt = MathEngine.phrase([`÷ ${v}`, `Divide by ${v}`], r); return { val: c/v, txt: txt, color: 't-div', opId: 'div', opVal: v }; } },
+        'div': { fn: (c, r, diff, ban) => { let divs = []; let limit = diff === 'hard' ? 20 : diff === 'medium' ? 12 : 7; for(let i=2; i<=limit; i++) if(c%i===0) divs.push(i); if(ban.has('halving')) divs = divs.filter(d => d !== 2); if(ban.has('thirding')) divs = divs.filter(d => d !== 3); if(ban.has('quartering')) divs = divs.filter(d => d !== 4); if(divs.length === 0) return null; let v = divs[Math.floor(r()*divs.length)]; let txt = MathEngine.phrase([`÷ ${v}`, `Divide by ${v}`], r); return { val: c/v, txt: txt, color: 't-div', opId: 'div', opVal: v }; } },
         'div10':  { fn: (c) => c%10===0 ? ({ val: c/10, txt: '/ 10', color: 't-div', opId: 'div', opVal: 10 }) : null },
         'div100': { fn: (c) => c%100===0 ? ({ val: c/100, txt: '/ 100', color: 't-div', opId: 'div', opVal: 100 }) : null },
+        'div2':   { fn: (c, r) => c%2===0  ? ({ val: c/2,  txt: MathEngine.phrase(['÷ 2', 'Divide by 2', '/ 2'], r), color: 't-div', opId: 'div', opVal: 2 }) : null },
+        'div3':   { fn: (c, r) => c%3===0  ? ({ val: c/3,  txt: MathEngine.phrase(['÷ 3', 'Divide by 3', '/ 3'], r), color: 't-div', opId: 'div', opVal: 3 }) : null },
+        'div4':   { fn: (c, r) => c%4===0  ? ({ val: c/4,  txt: MathEngine.phrase(['÷ 4', 'Divide by 4', '/ 4'], r), color: 't-div', opId: 'div', opVal: 4 }) : null },
+        'div5':   { fn: (c, r) => c%5===0  ? ({ val: c/5,  txt: MathEngine.phrase(['÷ 5', 'Divide by 5', '/ 5'], r), color: 't-div', opId: 'div', opVal: 5 }) : null },
+        'div6':   { fn: (c, r) => c%6===0  ? ({ val: c/6,  txt: MathEngine.phrase(['÷ 6', 'Divide by 6', '/ 6'], r), color: 't-div', opId: 'div', opVal: 6 }) : null },
+        'div7':   { fn: (c, r) => c%7===0  ? ({ val: c/7,  txt: MathEngine.phrase(['÷ 7', 'Divide by 7', '/ 7'], r), color: 't-div', opId: 'div', opVal: 7 }) : null },
+        'div8':   { fn: (c, r) => c%8===0  ? ({ val: c/8,  txt: MathEngine.phrase(['÷ 8', 'Divide by 8', '/ 8'], r), color: 't-div', opId: 'div', opVal: 8 }) : null },
+        'div9':   { fn: (c, r) => c%9===0  ? ({ val: c/9,  txt: MathEngine.phrase(['÷ 9', 'Divide by 9', '/ 9'], r), color: 't-div', opId: 'div', opVal: 9 }) : null },
+        'div12':  { fn: (c, r) => c%12===0 ? ({ val: c/12, txt: MathEngine.phrase(['÷ 12', 'Divide by 12', '/ 12'], r), color: 't-div', opId: 'div', opVal: 12 }) : null },
+        'div20':  { fn: (c, r) => c%20===0 ? ({ val: c/20, txt: MathEngine.phrase(['÷ 20', 'Divide by 20', '/ 20'], r), color: 't-div', opId: 'div', opVal: 20 }) : null },
+        'div25':  { fn: (c, r) => c%25===0 ? ({ val: c/25, txt: MathEngine.phrase(['÷ 25', 'Divide by 25', '/ 25'], r), color: 't-div', opId: 'div', opVal: 25 }) : null },
 
         // --- WORDED / DOUBLING / TRIPLING ---
         'double': { fn: (c, r) => ({ val: c*2, txt: MathEngine.phrase(['Double it', 'x 2'], r), cat: 'doubling', color: 't-word', opId: 'mult', opVal: 2 }) },
@@ -397,7 +425,7 @@ const MathEngine = {
         'third':  { fn: (c) => c%3===0 ? ({ val: c/3, txt: 'Third of this', cat: 'thirding', color: 't-word', opId: 'div', opVal: 3 }) : null },
 
         // --- POWERS ---
-        'square': { fn: (c, r) => c > 12 ? null : { val: c*c, txt: MathEngine.phrase(['Square it', 'Times by itself', `x ${c}`], r), cat: 'squaring', color: 't-pow', opId: 'pow', opVal: 2 } },
+        'square': { fn: (c, r, diff) => (diff === 'easy' && c > 6) || (diff === 'medium' && c > 10) || (diff === 'hard' && c > 12) ? null : { val: c*c, txt: MathEngine.phrase(['Square it', 'Times by itself', `x ${c}`], r), cat: 'squaring', color: 't-pow', opId: 'pow', opVal: 2 } },
         'cube':   { fn: (c) => c > 10 ? null : { val: c*c*c, txt: 'Cube it', cat: 'cubing', color: 't-pow', opId: 'pow', opVal: 3 } },
         'sqrt':   { fn: (c) => Number.isInteger(Math.sqrt(c)) ? { val: Math.sqrt(c), txt: 'Square Root', cat: 'rooting', color: 't-pow', opId: 'root', opVal: 2 } : null },
         'cbrt':   { fn: (c) => Number.isInteger(Math.cbrt(c)) ? { val: Math.cbrt(c), txt: 'Cube Root', cat: 'rooting', color: 't-pow', opId: 'root', opVal: 3 } : null },
@@ -432,17 +460,82 @@ const MathEngine = {
         'frac27': { fn: (c) => c%7===0 ? ({ val: (c/7)*2, txt: '2/7 of this', cat: 'complex_frac', color: 't-frac', opId: 'comp', opVal: 2/7 }) : null },
         'frac47': { fn: (c) => c%7===0 ? ({ val: (c/7)*4, txt: '4/7 of this', cat: 'complex_frac', color: 't-frac', opId: 'comp', opVal: 4/7 }) : null },
         'mult3_13': { fn: (c) => c%3===0 ? ({ val: (c/3)*10, txt: 'x 3 1/3', cat: 'mixed', color: 't-mult', opId: 'mixed', opVal: 10/3 }) : null },
+
+        // --- MORE FIXED +/- (fast mental) ---
+        'add1':   { fn: (c, r) => ({ val: c+1,  txt: MathEngine.phrase(['+ 1', 'Plus 1', 'Add 1', 'Add one', 'Up 1'], r), color: 't-add', opId: 'add', opVal: 1 }) },
+        'sub1':   { fn: (c, r) => ({ val: c-1,  txt: MathEngine.phrase(['- 1', 'Minus 1', 'Subtract 1', 'Down 1'], r), color: 't-sub', opId: 'sub', opVal: 1 }) },
+        'add2':   { fn: (c, r) => ({ val: c+2,  txt: MathEngine.phrase(['+ 2', 'Plus 2', 'Add 2'], r), color: 't-add', opId: 'add', opVal: 2 }) },
+        'sub2':   { fn: (c, r) => ({ val: c-2,  txt: MathEngine.phrase(['- 2', 'Minus 2', 'Take away 2'], r), color: 't-sub', opId: 'sub', opVal: 2 }) },
+        'add15':  { fn: (c, r) => ({ val: c+15, txt: MathEngine.phrase(['+ 15', 'Plus 15', 'Add 15'], r), color: 't-add', opId: 'add', opVal: 15 }) },
+        'sub15':  { fn: (c, r) => ({ val: c-15, txt: MathEngine.phrase(['- 15', 'Minus 15', 'Subtract 15', 'Fifteen less'], r), color: 't-sub', opId: 'sub', opVal: 15 }) },
+        'add20':  { fn: (c, r) => ({ val: c+20, txt: MathEngine.phrase(['+ 20', 'Plus 20', 'Add 20', 'A score more'], r), color: 't-add', opId: 'add', opVal: 20 }) },
+        'sub20':  { fn: (c, r) => ({ val: c-20, txt: MathEngine.phrase(['- 20', 'Minus 20', 'Subtract 20', 'A score off'], r), color: 't-sub', opId: 'sub', opVal: 20 }) },
+        'add100': { fn: (c, r) => ({ val: c+100, txt: MathEngine.phrase(['+ 100', 'Plus 100', 'A hundred on top'], r), color: 't-add', opId: 'add', opVal: 100 }) },
+        'sub100': { fn: (c, r) => c > 100 ? ({ val: c-100, txt: MathEngine.phrase(['- 100', 'Minus 100', 'Take a hundred off'], r), color: 't-sub', opId: 'sub', opVal: 100 }) : null },
+
+        // --- MORE × / (integer answers) ---
+        'mult11': { fn: (c, r) => ({ val: c*11,  txt: MathEngine.phrase([`x 11`, '× 11', 'Times 11', 'Multiply by 11'], r), color: 't-mult', opId: 'mult', opVal: 11 }) },
+        'mult15': { fn: (c, r) => ({ val: c*15,  txt: MathEngine.phrase([`x 15`, '× 15', 'Times 15'], r), color: 't-mult', opId: 'mult', opVal: 15 }) },
+        'mult16': { fn: (c, r) => ({ val: c*16,  txt: MathEngine.phrase([`x 16`, '× 16', 'Times 16'], r), color: 't-mult', opId: 'mult', opVal: 16 }) },
+        'mult30': { fn: (c, r) => ({ val: c*30,  txt: MathEngine.phrase([`x 30`, '× 30', 'Times 30'], r), color: 't-mult', opId: 'mult', opVal: 30 }) },
+        'mult40': { fn: (c, r) => ({ val: c*40,  txt: MathEngine.phrase([`x 40`, '× 40', 'Times 40'], r), color: 't-mult', opId: 'mult', opVal: 40 }) },
+        'mult50': { fn: (c, r) => ({ val: c*50,  txt: MathEngine.phrase([`x 50`, '× 50', 'Times 50'], r), color: 't-mult', opId: 'mult', opVal: 50 }) },
+        'div11':  { fn: (c, r) => c%11===0 ? ({ val: c/11, txt: MathEngine.phrase(['÷ 11', 'Divide by 11', '/ 11'], r), color: 't-div', opId: 'div', opVal: 11 }) : null },
+        'div15':  { fn: (c, r) => c%15===0 ? ({ val: c/15, txt: MathEngine.phrase(['÷ 15', 'Divide by 15', '/ 15'], r), color: 't-div', opId: 'div', opVal: 15 }) : null },
+        'div16':  { fn: (c, r) => c%16===0 ? ({ val: c/16, txt: MathEngine.phrase(['÷ 16', 'Divide by 16', '/ 16'], r), color: 't-div', opId: 'div', opVal: 16 }) : null },
+        'div30':  { fn: (c, r) => c%30===0 ? ({ val: c/30, txt: MathEngine.phrase(['÷ 30', 'Divide by 30', '/ 30'], r), color: 't-div', opId: 'div', opVal: 30 }) : null },
+        'div50':  { fn: (c, r) => c%50===0 ? ({ val: c/50, txt: MathEngine.phrase(['÷ 50', 'Divide by 50', '/ 50'], r), color: 't-div', opId: 'div', opVal: 50 }) : null },
+
+        // --- % (integer with divisibility) ---
+        'perc15': { fn: (c) => c%20===0 ? ({ val: (c*3)/20, txt: '15% of this', cat: 'perc', color: 't-perc', opId: 'div', opVal: 0.15 }) : null },
+        'perc30': { fn: (c) => c%10===0 ? ({ val: (c*3)/10, txt: '30% of this', cat: 'perc', color: 't-perc', opId: 'div', opVal: 0.3 }) : null },
+        'perc40': { fn: (c) => c%5===0 ? ({ val: (c*2)/5,  txt: '40% of this', cat: 'perc', color: 't-perc', opId: 'div', opVal: 0.4 }) : null },
+        'perc60': { fn: (c) => c%5===0 ? ({ val: (c*3)/5,  txt: '60% of this', cat: 'perc', color: 't-perc', opId: 'div', opVal: 0.6 }) : null },
+
+        // +10% / -10% as whole numbers: c + c/10, c - c/10
+        'inc10':  { fn: (c) => c%10===0 ? ({ val: c + (c/10), txt: 'Increase by 10%', cat: 'perc_growth2', color: 't-frac', opId: 'growth', opVal: 1.1 }) : null },
+        'dec10':  { fn: (c) => c%10===0 && c > 9 ? ({ val: c - (c/10), txt: 'Decrease by 10%', cat: 'perc_decay2', color: 't-frac', opId: 'decay', opVal: 0.9 }) : null },
+
+        // --- FRACTIONS (extra, integer) ---
+        'frac13': { fn: (c) => c%3===0 ? ({ val: c/3, txt: '1/3 of this', cat: 'thirds_frac', color: 't-frac', opId: 'div', opVal: 3 }) : null },
+        'frac23': { fn: (c) => c%3===0 ? ({ val: (2*c)/3, txt: '2/3 of this', cat: 'twothirds', color: 't-frac', opId: 'comp', opVal: 2/3 }) : null },
+        'frac16': { fn: (c) => c%6===0 ? ({ val: c/6, txt: '1/6 of this', cat: 'sixths', color: 't-frac', opId: 'div', opVal: 6 }) : null },
+        'frac56': { fn: (c) => c%6===0 ? ({ val: (5*c)/6, txt: '5/6 of this', cat: 'fivesixths', color: 't-frac', opId: 'comp', opVal: 5/6 }) : null },
+        'nearten': { fn: (c) => { const v = Math.round(c/10)*10; return (v>0 && v!==c) ? ({ val: v, txt: 'Round to nearest 10', cat: 'round10', color: 't-word', opId: 'round', opVal: 10 }) : null; } },
     },
 
+    // Same operation count for every difficulty; only magnitudes and pool membership change.
+    MENTAL_ROUNDS: 10,
+
     getPool(diff) {
-        if(diff === 'easy') return ['add', 'sub', 'mult', 'div', 'double', 'quad', 'half', 'frac14', 'perc50', 'square', 'mult10', 'div10', 'inc50'];
-        if(diff === 'medium') return ['add', 'sub', 'mult', 'div', 'double', 'half', 'square', 'sqrt', 'perc10', 'perc20', 'perc25', 'perc50', 'frac34', 'frac47', 'frac15', 'inc20', 'dec20'];
-        return ['add', 'sub', 'mult', 'div', 'square', 'sqrt', 'cube', 'cbrt', 'triple', 'third', 'perc05', 'perc12', 'perc25', 'perc75', 'perc33', 'less10', 'frac38', 'frac58', 'frac78', 'frac27', 'mult3_13', 'add_large', 'sub_large', 'mult100', 'div100'];
+        // Large pools → more variation between runs. Every key must exist on `ops`.
+        const easy = [
+            'add', 'sub', 'add1', 'sub1', 'add2', 'sub2', 'add5', 'sub5', 'add10', 'sub10', 'add15', 'sub15', 'add20', 'sub20',
+            'nearten', 'mult', 'div', 'mult3', 'mult4', 'mult5', 'mult6', 'mult8', 'div2', 'div3', 'div4', 'div5', 'div6', 'div8',
+            'double', 'half', 'quad', 'triple', 'third', 'frac14', 'frac15', 'frac25', 'frac13', 'frac16', 'frac23', 'frac34', 'frac56',
+            'perc10', 'perc15', 'perc20', 'perc25', 'perc30', 'perc40', 'perc50', 'perc60', 'inc10', 'dec10', 'mult10', 'div10'
+        ];
+        const fromMedium = [
+            'add25', 'sub25', 'add50', 'sub50', 'mult7', 'mult9', 'mult11', 'mult12', 'mult15', 'mult16', 'mult20', 'mult25', 'mult30', 'mult40', 'mult50',
+            'div7', 'div9', 'div12', 'div20', 'div25', 'div11', 'div15', 'div16', 'div30', 'div50', 'div100',
+            'inc20', 'dec20', 'less10', 'inc50', 'square', 'sqrt', 'frac18', 'frac45', 'frac38', 'frac58', 'frac78', 'frac27', 'frac47', 'mult3_13',
+            'perc12', 'perc33', 'perc01', 'perc05', 'perc75'
+        ];
+        const fromHard = ['add100', 'sub100', 'add_large', 'sub_large', 'mult100', 'div10', 'div100', 'cube', 'cbrt'];
+        if (diff === 'easy') return easy;
+        if (diff === 'medium') return Array.from(new Set([...easy, ...fromMedium]));
+        return Array.from(new Set([...easy, ...fromMedium, ...fromHard]));
+    },
+
+    startRange(diff) {
+        if (diff === 'easy') return { min: 5, max: 24 };
+        if (diff === 'medium') return { min: 8, max: 40 };
+        return { min: 10, max: 72 };
     },
 
     generate(rng, difficulty) {
-        let minStart = difficulty === 'hard' ? 50 : 10;
-        let maxStart = difficulty === 'hard' ? 100 : 30;
+        const { min: minStart, max: maxStart } = this.startRange(difficulty);
+        const steps = this.MENTAL_ROUNDS;
         let current = Math.floor(rng() * (maxStart - minStart)) + minStart;
         
         let sequence = [{ txt: current, color: 't-start', type: 'start', total: current }];
@@ -451,11 +544,11 @@ const MathEngine = {
         let previousStep = null;
         const poolKeys = this.getPool(difficulty);
 
-        for (let i = 0; i < 9; i++) {
+        for (let i = 0; i < steps; i++) {
             let valid = false;
             let attempts = 0;
 
-            while (!valid && attempts < 50) {
+            while (!valid && attempts < 100) {
                 attempts++;
                 const opKey = poolKeys[Math.floor(rng() * poolKeys.length)];
                 let opDef = this.ops[opKey];
@@ -520,10 +613,12 @@ const Game = {
         if (mode === 'daily') {
             const seedStr = new Date().toISOString().slice(0, 10);
             rng = this.createSeeder(seedStr);
-            diff = 'medium'; 
+            diff = this.rollDailyDifficulty(rng);
         } else {
             rng = Math.random;
         }
+        this.playMode = mode;
+        this.runDifficulty = diff;
 
         const result = MathEngine.generate(rng, diff);
         this.data = result;
@@ -591,6 +686,16 @@ const Game = {
             let t = h = Math.imul(h ^ h >>> 15, 0xcaf649a9);
             return ((t ^ t >>> 14) >>> 0) / 4294967296;
         }
+    },
+
+    // Uses the first value from a daily-seeded PRNG; everyone on the same UTC day gets the same tier, then the same game.
+    DAILY_EASY_CUTOFF: 0.18,
+    DAILY_MEDIUM_CUTOFF: 0.95,
+    rollDailyDifficulty(rng) {
+        const u = rng();
+        if (u < this.DAILY_EASY_CUTOFF) return 'easy';
+        if (u < this.DAILY_MEDIUM_CUTOFF) return 'medium';
+        return 'hard';
     },
 
     renderCarousel(seq) {
@@ -701,27 +806,31 @@ const Game = {
         const title = document.getElementById('res-title');
         const num = document.getElementById('res-time');
         const msg = document.getElementById('res-msg');
+        const dailyNames = { easy: 'Beginner', medium: 'Medium', hard: 'Hard' };
+        const dailyPrefix = this.playMode === 'daily' && this.runDifficulty
+            ? `Daily (${dailyNames[this.runDifficulty] || this.runDifficulty}). `
+            : '';
 
         if (isSuccess) {
             if (elapsed <= 30) {
                 title.innerText = "SPOT ON!";
                 title.style.color = "var(--c-add)";
-                msg.innerText = "Great speed!";
+                msg.innerText = dailyPrefix + "Great speed!";
             } else {
                 title.innerText = "SPOT ON";
                 title.style.color = "var(--c-div)";
-                msg.innerText = "But too slow (>30s)";
+                msg.innerText = dailyPrefix + "But too slow (>30s)";
             }
             num.innerText = elapsed.toFixed(1) + 's';
         } else {
             title.innerText = gaveUp ? "GAVE UP" : "FAILED";
             title.style.color = "var(--c-sub)";
             num.innerText = "---";
-            msg.innerText = `Correct answer was ${this.data.target}`;
+            msg.innerText = dailyPrefix + `Correct answer was ${this.data.target}`;
         }
 
         this.renderBreakdown();
-        this.lastResult = { isSuccess, time: elapsed.toFixed(1) };
+        this.lastResult = { isSuccess, time: elapsed.toFixed(1), playMode: this.playMode, tier: this.runDifficulty };
         Nav.to('screen-result');
     },
 
@@ -750,7 +859,11 @@ const Game = {
         const icon = r.isSuccess ? '✅' : '❌';
         const date = new Date().toLocaleDateString();
         const url = 'https://mercedessm.github.io/Math-Flow/';
-        const txt = `30s Math Challenge (${date})\n${icon} ${r.time}s\nBeat this!\nTry it: ${url}`;
+        const tierLabel = { easy: 'Beginner', medium: 'Medium', hard: 'Hard' };
+        const dayLine = r.playMode === 'daily' && r.tier
+            ? `Daily (${tierLabel[r.tier] || r.tier})\n`
+            : '';
+        const txt = `30s Math Challenge (${date})\n${dayLine}${icon} ${r.time}s\nBeat this!\nTry it: ${url}`;
         try {
             await navigator.clipboard.writeText(txt);
             document.getElementById('btn-share').innerText = 'Copied!';
