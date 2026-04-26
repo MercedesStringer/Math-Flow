@@ -373,8 +373,8 @@ const MathEngine = {
 
     ops: {
         // --- BASIC ARITHMETIC ---
-        'add': { fn: (c, r, diff) => { let max = diff === 'hard' ? 50 : diff === 'medium' ? 24 : 12; let v = Math.floor(r()*max)+1; let txt = MathEngine.phrase([`+ ${v}`, `Plus ${v}`, `Add ${v}`], r); return { val: c+v, txt: txt, color: 't-add', opId: 'add', opVal: v }; } },
-        'sub': { fn: (c, r, diff) => { let max = diff === 'hard' ? 50 : diff === 'medium' ? 16 : 9; let v = Math.floor(r()*max)+1; let txt = MathEngine.phrase([`- ${v}`, `Minus ${v}`, `Subtract ${v}`, `Deduct ${v}`, `Take away ${v}`], r); return { val: c-v, txt: txt, color: 't-sub', opId: 'sub', opVal: v }; } },
+        'add': { fn: (c, r, diff) => { let max = diff === 'hard' ? 50 : diff === 'medium' ? 20 : 8; let v = Math.floor(r()*max)+1; let txt = MathEngine.phrase([`+ ${v}`, `Plus ${v}`, `Add ${v}`], r); return { val: c+v, txt: txt, color: 't-add', opId: 'add', opVal: v }; } },
+        'sub': { fn: (c, r, diff) => { let max = diff === 'hard' ? 50 : diff === 'medium' ? 14 : 6; let v = Math.floor(r()*max)+1; let txt = MathEngine.phrase([`- ${v}`, `Minus ${v}`, `Subtract ${v}`, `Deduct ${v}`, `Take away ${v}`], r); return { val: c-v, txt: txt, color: 't-sub', opId: 'sub', opVal: v }; } },
         'add_large': { fn: (c, r) => ({ val: c+99, txt: MathEngine.phrase(['+ 99', 'Add 99'], r), color: 't-add', opId: 'add', opVal: 99 }) },
         'sub_large': { fn: (c, r) => ({ val: c-99, txt: MathEngine.phrase(['- 99', 'Subtract 99'], r), color: 't-sub', opId: 'sub', opVal: 99 }) },
         'add5':  { fn: (c, r) => ({ val: c+5,  txt: MathEngine.phrase(['+ 5', 'Plus 5', 'Add 5'], r), color: 't-add', opId: 'add', opVal: 5 }) },
@@ -387,7 +387,7 @@ const MathEngine = {
         'sub50': { fn: (c, r) => ({ val: c-50, txt: MathEngine.phrase(['- 50', 'Minus 50', 'Subtract 50', 'Take 50 off'], r), color: 't-sub', opId: 'sub', opVal: 50 }) },
 
         // --- MULTIPLICATION ---
-        'mult': { fn: (c, r, diff) => { let max = diff === 'hard' ? 12 : diff === 'medium' ? 8 : 5; let v = Math.floor(r()*(max-1))+2; let txt = MathEngine.phrase([`× ${v}`, `Times ${v}`, `Multiply by ${v}`], r); return { val: c*v, txt: txt, color: 't-mult', opId: 'mult', opVal: v }; } },
+        'mult': { fn: (c, r, diff) => { let max = diff === 'hard' ? 12 : diff === 'medium' ? 7 : 4; let v = Math.floor(r()*(max-1))+2; let txt = MathEngine.phrase([`× ${v}`, `Times ${v}`, `Multiply by ${v}`], r); return { val: c*v, txt: txt, color: 't-mult', opId: 'mult', opVal: v }; } },
         'mult5':  { fn: (c) => ({ val: c*5, txt: 'x 5', color: 't-mult', opId: 'mult', opVal: 5 }) },
         'mult10': { fn: (c) => ({ val: c*10, txt: 'x 10', color: 't-mult', opId: 'mult', opVal: 10 }) },
         'mult100':{ fn: (c) => ({ val: c*100, txt: 'x 100', color: 't-mult', opId: 'mult', opVal: 100 }) },
@@ -402,7 +402,7 @@ const MathEngine = {
         'mult25': { fn: (c, r) => ({ val: c*25, txt: MathEngine.phrase([`x 25`, '× 25', 'Times 25'], r), color: 't-mult', opId: 'mult', opVal: 25 }) },
 
         // --- DIVISION ---
-        'div': { fn: (c, r, diff, ban) => { let divs = []; let limit = diff === 'hard' ? 20 : diff === 'medium' ? 12 : 7; for(let i=2; i<=limit; i++) if(c%i===0) divs.push(i); if(ban.has('halving')) divs = divs.filter(d => d !== 2); if(ban.has('thirding')) divs = divs.filter(d => d !== 3); if(ban.has('quartering')) divs = divs.filter(d => d !== 4); if(divs.length === 0) return null; let v = divs[Math.floor(r()*divs.length)]; let txt = MathEngine.phrase([`÷ ${v}`, `Divide by ${v}`], r); return { val: c/v, txt: txt, color: 't-div', opId: 'div', opVal: v }; } },
+        'div': { fn: (c, r, diff, ban) => { let divs = []; let limit = diff === 'hard' ? 20 : diff === 'medium' ? 6 : 5; for(let i=2; i<=limit; i++) if(c%i===0) divs.push(i); if(ban.has('halving')) divs = divs.filter(d => d !== 2); if(ban.has('thirding')) divs = divs.filter(d => d !== 3); if(ban.has('quartering')) divs = divs.filter(d => d !== 4); if(divs.length === 0) return null; let v = divs[Math.floor(r()*divs.length)]; let txt = MathEngine.phrase([`÷ ${v}`, `Divide by ${v}`], r); return { val: c/v, txt: txt, color: 't-div', opId: 'div', opVal: v }; } },
         'div10':  { fn: (c) => c%10===0 ? ({ val: c/10, txt: '/ 10', color: 't-div', opId: 'div', opVal: 10 }) : null },
         'div100': { fn: (c) => c%100===0 ? ({ val: c/100, txt: '/ 100', color: 't-div', opId: 'div', opVal: 100 }) : null },
         'div2':   { fn: (c, r) => c%2===0  ? ({ val: c/2,  txt: MathEngine.phrase(['÷ 2', 'Divide by 2', '/ 2'], r), color: 't-div', opId: 'div', opVal: 2 }) : null },
@@ -504,31 +504,41 @@ const MathEngine = {
         'nearten': { fn: (c) => { const v = Math.round(c/10)*10; return (v>0 && v!==c) ? ({ val: v, txt: 'Round to nearest 10', cat: 'round10', color: 't-word', opId: 'round', opVal: 10 }) : null; } },
     },
 
-    // Same operation count for every difficulty; only magnitudes and pool membership change.
     MENTAL_ROUNDS: 10,
+    // Running total strictly *below* this. Easy: two-digit; medium: at most 199 (light hundreds, “a few”); hard: can reach high hundreds, never 1000+.
+    maxRunValue(diff) {
+        if (diff === 'easy') return 100;
+        if (diff === 'medium') return 200;
+        return 1000;
+    },
 
     getPool(diff) {
-        // Large pools → more variation between runs. Every key must exist on `ops`.
+        // Easy = short list of “tables + facts” only (no powers, no ×10 blowups, no sevenths, etc.).
         const easy = [
-            'add', 'sub', 'add1', 'sub1', 'add2', 'sub2', 'add5', 'sub5', 'add10', 'sub10', 'add15', 'sub15', 'add20', 'sub20',
-            'nearten', 'mult', 'div', 'mult3', 'mult4', 'mult5', 'mult6', 'mult8', 'div2', 'div3', 'div4', 'div5', 'div6', 'div8',
-            'double', 'half', 'quad', 'triple', 'third', 'frac14', 'frac15', 'frac25', 'frac13', 'frac16', 'frac23', 'frac34', 'frac56',
-            'perc10', 'perc15', 'perc20', 'perc25', 'perc30', 'perc40', 'perc50', 'perc60', 'inc10', 'dec10', 'mult10', 'div10'
+            'add', 'sub', 'add1', 'sub1', 'add2', 'sub2', 'add5', 'sub5', 'add10', 'sub10',
+            'mult', 'div', 'mult3', 'mult4', 'mult5', 'div2', 'div3', 'div4', 'div5', 'div10',
+            'double', 'half', 'frac14', 'frac15', 'frac25', 'perc10', 'perc20', 'perc25', 'perc50'
         ];
+        // Medium: cap 199 + smaller random divisors (see `div` op). No 7th fractions, big fixed ÷, ×3⅓, or huge mults.
         const fromMedium = [
-            'add25', 'sub25', 'add50', 'sub50', 'mult7', 'mult9', 'mult11', 'mult12', 'mult15', 'mult16', 'mult20', 'mult25', 'mult30', 'mult40', 'mult50',
-            'div7', 'div9', 'div12', 'div20', 'div25', 'div11', 'div15', 'div16', 'div30', 'div50', 'div100',
-            'inc20', 'dec20', 'less10', 'inc50', 'square', 'sqrt', 'frac18', 'frac45', 'frac38', 'frac58', 'frac78', 'frac27', 'frac47', 'mult3_13',
+            'add25', 'sub25', 'add50', 'sub50', 'mult6', 'mult7', 'mult8', 'mult9', 'mult11', 'mult12', 'mult15', 'mult16', 'mult20', 'mult25',
+            'div6', 'div7', 'div8', 'div9', 'div10', 'div100',
+            'inc20', 'dec20', 'less10', 'inc50', 'square', 'sqrt', 'frac18', 'frac34', 'frac45', 'frac25',
             'perc12', 'perc33', 'perc01', 'perc05', 'perc75'
         ];
-        const fromHard = ['add100', 'sub100', 'add_large', 'sub_large', 'mult100', 'div10', 'div100', 'cube', 'cbrt'];
+        // Hard: hundreds territory, longer division / heavier fractions, big steps.
+        const fromHard = [
+            'add100', 'sub100', 'add_large', 'sub_large', 'mult100', 'mult30', 'mult40', 'mult50',
+            'div11', 'div12', 'div15', 'div16', 'div20', 'div25', 'div30', 'div50', 'div10', 'div100',
+            'frac27', 'frac47', 'frac38', 'frac58', 'frac78', 'mult3_13', 'cube', 'cbrt'
+        ];
         if (diff === 'easy') return easy;
         if (diff === 'medium') return Array.from(new Set([...easy, ...fromMedium]));
         return Array.from(new Set([...easy, ...fromMedium, ...fromHard]));
     },
 
     startRange(diff) {
-        if (diff === 'easy') return { min: 5, max: 24 };
+        if (diff === 'easy') return { min: 6, max: 18 };
         if (diff === 'medium') return { min: 8, max: 40 };
         return { min: 10, max: 72 };
     },
@@ -536,6 +546,7 @@ const MathEngine = {
     generate(rng, difficulty) {
         const { min: minStart, max: maxStart } = this.startRange(difficulty);
         const steps = this.MENTAL_ROUNDS;
+        const valCap = this.maxRunValue(difficulty);
         let current = Math.floor(rng() * (maxStart - minStart)) + minStart;
         
         let sequence = [{ txt: current, color: 't-start', type: 'start', total: current }];
@@ -554,7 +565,7 @@ const MathEngine = {
                 let opDef = this.ops[opKey];
                 const result = opDef.fn(current, rng, difficulty, bannedConcepts);
 
-                if (result && Number.isInteger(result.val) && result.val > 0 && result.val < 1000) {
+                if (result && Number.isInteger(result.val) && result.val > 0 && result.val < valCap) {
                     if (previousStep) {
                         const prev = previousStep;
                         const curr = result;
@@ -585,8 +596,13 @@ const MathEngine = {
                 }
             }
             if (!valid) { 
-                current += 1; 
-                sequence.push({ txt: '+ 1', color: 't-add', total: current, lenClass: '' }); 
+                if (current + 1 >= valCap && current > 1) {
+                    current -= 1;
+                    sequence.push({ txt: '- 1', color: 't-sub', total: current, lenClass: '' });
+                } else {
+                    current += 1;
+                    sequence.push({ txt: '+ 1', color: 't-add', total: current, lenClass: '' });
+                }
             }
         }
         return { sequence, target: current };
